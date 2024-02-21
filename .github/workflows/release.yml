@@ -33,7 +33,7 @@ jobs:
       run: CGO_ENABLED=0 GOOS=linux  GOARCH=arm  go build -o hello-linux-arm main.go
     - name: Create Release
       id: create_release
-      uses: actions/upload-artifact@v2
+      uses: actions/create-release@v1
       env:
           GITHUB_TOKEN: ${{secrets.TOKEN}}
       with:
