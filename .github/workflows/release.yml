@@ -35,10 +35,11 @@ jobs:
       id: create_release
       uses: actions/create-release@v1
       env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        with:
-          tag_name: Tag_${{ github.sha }}
-          release_name: Release_${{ github.sha }}
+          GITHUB_TOKEN: ${{  secrets.TOKEN  }}
+      with:
+          tag_name: ${{github.ref}}
+          release_name: Release ${{github.ref}}
+          body: Hello New Release
           draft: false
           prerelease: false
 
