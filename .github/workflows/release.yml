@@ -31,12 +31,46 @@ jobs:
       run: CGO_ENABLED=0 GOOS=windows  GOARCH=amd64  go build -o hello-windows-amd64.exe main.go
     - name: Build for Linux (ARM)
       run: CGO_ENABLED=0 GOOS=linux  GOARCH=arm  go build -o hello-linux-arm main.go
-    - name: Archive Release
+    - name: Create Release
+      id: create_release
       uses: actions/upload-artifact@v2
+      env:
+          GITHUB_TOKEN: ${{secrets.GITHB_TOKEN}}
       with:
-        name: hello-world
-        path: |
-            hello-windows-amd64.exe
-            hello-linux-arm
-            hello-darwin-amd64
-            hello-linux-amd64
+          tag_name: ${{github.ref}}
+          release_name: Release ${{github.ref}}
+          body: Hello New Release
+          draft: false
+          prerelease: false
+    - name: Upload Linux-amd64 Asset
+      uses: actions/upload-release-asset@v1
+      env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          asset_path: ./hello-linux-amd64
+          asset_name: hello-linux-amd64
+          asset_content_type: application/octet-stream
+
+    - name: Upload Window-amd64 Asset
+      uses: actions/upload-release-asset@v1
+      env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          asset_path: ./hello-windows-amd64.exe
+          asset_name: hello-windows-amd64.exe
+          asset_content_type: application/octet-stream
+
+    - name: Upload Drawin-amd64 Asset
+      uses: actions/upload-release-asset@v1
+      env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          asset_path: ./hello-darwin-amd64
+          asset_name: hello-darwin-amd64
+          asset_content_type: application/octet-stream
+
+    - name: Upload Linux-arm Asset
+      uses: actions/upload-release-asset@v1
+      env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          asset_path: ./hello-linux-arm
+          asset_name: hello-linux-arm
+          asset_content_type: application/octet-stream
+  
