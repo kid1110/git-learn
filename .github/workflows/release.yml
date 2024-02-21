@@ -47,6 +47,8 @@ jobs:
       uses: actions/upload-release-asset@v1
       env:
           GITHUB_TOKEN: ${{secrets.TOKEN}}
+      with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./hello-linux-amd64
           asset_name: hello-linux-amd64
           asset_content_type: application/octet-stream
@@ -55,6 +57,8 @@ jobs:
       uses: actions/upload-release-asset@v1
       env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./hello-windows-amd64.exe
           asset_name: hello-windows-amd64.exe
           asset_content_type: application/octet-stream
@@ -63,6 +67,8 @@ jobs:
       uses: actions/upload-release-asset@v1
       env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./hello-darwin-amd64
           asset_name: hello-darwin-amd64
           asset_content_type: application/octet-stream
@@ -71,6 +77,8 @@ jobs:
       uses: actions/upload-release-asset@v1
       env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./hello-linux-arm
           asset_name: hello-linux-arm
           asset_content_type: application/octet-stream
