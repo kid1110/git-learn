@@ -1,0 +1,42 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Hello-Go
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.22'
+
+    - name: Build for Linux (amd64)
+      run:  GOOS=linux GOARCH=amd64 go build -o hello-linux-amd64 main.go
+         
+    - name: Build for macOS (amd64)
+      run:  CGO_ENABLED=0 GOOS=darwin  GOARCH=amd64  go build -o hello-darwin-amd64 main.go
+      
+    - name: Build for Windows(amd64)
+      run: CGO_ENABLED=0 GOOS=windows  GOARCH=amd64  go build -o hello-windows-amd64.exe main.go
+    - name: Build for Linux (ARM)
+      run: CGO_ENABLED=0 GOOS=linux  GOARCH=arm  go build -o hello-linux-arm main.go
+    - name: Archive Release
+      uses: actions/upload-artifact@v2
+      with:
+        name: hello-world
+        path: |
+            hello-windows-amd64.exe
+            hello-linux-arm
+            hello-darwin-amd64
+            hello-linux-amd64
